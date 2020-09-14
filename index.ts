@@ -9,13 +9,7 @@ import { map, timeout } from 'rxjs/operators';
 // source.subscribe(x => console.log(x))
 
 
-const hello = Observable.create(function(observer) {
-  observer.next(42);
-  observer.next(43);
-  observer.next(44);
-  observer.complete();
-});
-
-const subscribe = hello
-  .pipe(timeout(10))
-  .subscribe(val => console.log(val));
+//emits values of any type
+const source = of(42,43,45);
+//output: {name: 'Brian'}, [1,2,3], function hello() { return 'Hello' }
+const subscribe = source.subscribe(val => console.log(val));
