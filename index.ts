@@ -16,4 +16,6 @@ const hello = Observable.create(function(observer) {
   observer.complete();
 });
 
-const subscribe = hello.pipe(timeout(10)).subscribe(val => console.log(val));
+const subscribe = hello
+  .pipe(timeout(10))
+  .subscribe(val => console.log(val));
