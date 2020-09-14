@@ -1,4 +1,4 @@
-import { of, Observable, from } from 'rxjs'; 
+import { of, Observable, fromEvent, from, observable } from 'rxjs'; 
 import { map, timeout } from 'rxjs/operators';
 import { fromPromise } from 'rxjs/internal-compatibility';
 
@@ -9,6 +9,5 @@ import { fromPromise } from 'rxjs/internal-compatibility';
 
 // source.subscribe(x => console.log(x))
 
-
-const result = fromPromise(fetch('https://jsonplaceholder.typicode.com/todos').then(res => res.json()));
-result.subscribe(x => console.log(x));
+var clicks = fromEvent(document, 'click');
+clicks.subscribe(x => console.log(x));
