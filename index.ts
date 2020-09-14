@@ -10,5 +10,5 @@ import { fromPromise } from 'rxjs/internal-compatibility';
 // source.subscribe(x => console.log(x))
 
 
-const result = fromPromise(fetch('https://jsonplaceholder.typicode.com/todos').then(res => res.json()));
+const result = from(fetch('https://jsonplaceholder.typicode.com/todos').then(res => res.json()));
 result.subscribe(x => console.log(x));
