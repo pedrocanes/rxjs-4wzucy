@@ -11,6 +11,6 @@ import { fromPromise } from 'rxjs/internal-compatibility';
 
 
 
-var button = document.querySelector('button');
-const clicks = fromEvent(button, 'click');
-clicks.subscribe(x => console.log(x));
+const result = fromPromise(fetch('https://jsonplaceholder.typicode.com/todos').then(res => res.json()));
+const example = result.pipe(map(val => val));
+example.subscribe(x => console.log(x));
