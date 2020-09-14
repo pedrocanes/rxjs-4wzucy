@@ -1,4 +1,4 @@
-import { of, Observable, fromEvent, from, observable, fromEventPattern } from 'rxjs'; 
+import { of, Observable, fromEvent, from, observable, fromEventPattern, range } from 'rxjs'; 
 import { map, timeout, filter } from 'rxjs/operators';
 import { fromPromise } from 'rxjs/internal-compatibility';
 
@@ -10,6 +10,23 @@ import { fromPromise } from 'rxjs/internal-compatibility';
 // source.subscribe(x => console.log(x))
 
 
-const source = from([1, 2, 3, 4, 5,6,7,8,9,10,11,12,13,14,15]);
-const example = source.pipe(filter(num => num % 2 != 0));
-const subscribe = example.subscribe(val => console.log(val));
+const obs3 = range(1,20);
+const obs2 = range(1,40);
+const obs1 = range(1,60);
+
+const result = obs1.pipe(
+  filter(val => val % 2 ===0)
+);
+
+const result2 = obs2.pipe(
+  filter(val => val % 3 ===0)
+);
+
+const result3 = obs3.pipe(
+  filter(val => val % 5 ===0)
+);
+
+
+result.subscribe((val) => console.log(val, 'obs1'));
+result2.subscribe((val) => console.log(val, 'obs2'));
+result3.subscribe((val) => console.log(val, 'obs3'));
