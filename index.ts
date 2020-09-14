@@ -1,5 +1,6 @@
 import { of, Observable, from } from 'rxjs'; 
 import { map, timeout } from 'rxjs/operators';
+import { fromPromise } from 'rxjs/internal-compatibility';
 
 
 // const source = of('World').pipe(
@@ -9,7 +10,5 @@ import { map, timeout } from 'rxjs/operators';
 // source.subscribe(x => console.log(x))
 
 
-const array = [42,43,45];
-const result = from(array);
-
+const result = fromPromise(fetch('https://jsonplaceholder.typicode.com/todos').then(res => res.json()));
 result.subscribe(x => console.log(x));
