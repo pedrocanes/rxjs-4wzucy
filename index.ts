@@ -22,4 +22,9 @@ var clicks = fromEventPattern(
   addClickHandler,
   removeClickHandler
 );
-clicks.subscribe(x => console.log(x));
+
+let example = clicks.subscribe(x => console.log(x));
+
+setTimeout(() => {
+  example.unsubscribe();
+}, 2000);
