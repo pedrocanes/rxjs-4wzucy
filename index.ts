@@ -10,16 +10,7 @@ import { fromPromise } from 'rxjs/internal-compatibility';
 // source.subscribe(x => console.log(x))
 
 
-function addClickHandler(handler) {
-  document.addEventListener('click', handler);
-}
 
-function removeClickHandler(handler) {
-  document.removeEventListener('click', handler);
-}
-
-var clicks = fromEventPattern(
-  addClickHandler,
-  removeClickHandler
-);
+var button = document.querySelector('button');
+const clicks = fromEvent(button, 'click');
 clicks.subscribe(x => console.log(x));
