@@ -1,5 +1,5 @@
 import { of, Observable, fromEvent, from, observable, fromEventPattern } from 'rxjs'; 
-import { map, timeout, filter, switchMapTo } from 'rxjs/operators';
+import { map, timeout, filter, switchMap, flatMap, delay } from 'rxjs/operators';
 import { fromPromise } from 'rxjs/internal-compatibility';
 
 
@@ -16,16 +16,17 @@ const example = source.pipe(filter(num => num % 2 != 0));
 
 var button = document.querySelector('button');
 
-
-const clicks = fromEvent(button, 'click');
-const result = from(fetch('https://jsonplaceholder.typicode.com/todos').then(res => res.json()));
-const resultPiped = result.pipe(
+var clicks = fromEvent(button, 'click');
+var result = from(fetch('https://jsonplaceholder.typicode.com/todos').then(res => res.json()));
+var resultPiped = result.pipe(
+  delay(1000),
   map((val) => {
     return val.filter(num => num.completed);
   })
 );
 
-const finalRes = clicks.pipe(
-  switchMapTo(resultPiped)
-);
-finalRes.subscribe(x=>console.log(x));
+clicks.pipe(
+  flatMap(event => {
+    return resultPiped
+  })
+).subscribe((val) => console.log(val));
