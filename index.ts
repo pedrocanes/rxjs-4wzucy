@@ -10,12 +10,14 @@ import { map, timeout } from 'rxjs/operators';
 
 
 const hello = Observable.create(function(observer) {
-  observer.next(42);
-  observer.next(43);
-  observer.next(44);
-  observer.complete();
+  setTimeout(() => {
+    observer.next(42);
+    observer.next(43);
+    observer.next(44);
+    observer.complete();
+  }, 1000);
 });
 
 const subscribe = hello
-  .pipe(timeout(10))
+  //.pipe(timeout(10))
   .subscribe(val => console.log(val));
