@@ -1,33 +1,15 @@
-import { of, Observable, observable, Subject, combineLatest } from 'rxjs'; 
-import { map, timeout } from 'rxjs/operators';
+import { of, Observable, observable, Subject, combineLatest, fromEvent, merge } from 'rxjs'; 
+import { map, timeout, mapTo } from 'rxjs/operators';
 
-const subject = new Subject();
-const subject2 = new Subject();
- 
-subject.subscribe({
-  next: (v) => console.log(v)
-});
+var doneBtn = document.getElementById('done');
+var cancelBtn = document.getElementById('cancel');
 
-subject2.subscribe({
-  next: (v) => console.log(v)
-});
- 
-subject.next(1);
 
-subject2.next('A');
+const doneClick = fromEvent(doneBtn, 'click');
+const cancelClick = fromEvent(cancelBtn, 'click');
 
-subject.next(2);
-
-subject2.next('B');
-subject2.next('C');
-subject2.next('D');
-
-subject.next(3);
-subject.next(4);
-subject.next(5);
-
-subject.complete();
-subject2.complete();
-
-const combinedTimers = combineLatest(subject, subject2);
-combinedTimers.subscribe(value => console.log(value));
+const example = merge(
+  doneClick.pipe(mapTo('done!')),
+  cancelClick.pipe(mapTo('cancel!'))
+);
+const subscribe = example.subscribe(val => console.log(val));
