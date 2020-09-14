@@ -1,5 +1,5 @@
 import { of, Observable, fromEvent, from, observable, fromEventPattern } from 'rxjs'; 
-import { map, timeout, filter } from 'rxjs/operators';
+import { map, timeout, filter, switchMapTo } from 'rxjs/operators';
 import { fromPromise } from 'rxjs/internal-compatibility';
 
 
@@ -25,6 +25,7 @@ const resultPiped = result.pipe(
   })
 );
 
-clicks.subscribe(res1 => {
-  resultPiped.subscribe((val) => console.log(val))
-});
+const finalRes = clicks.pipe(
+  switchMapTo(resultPiped)
+);
+finalRes.subscribe(x=>console.log(x));
