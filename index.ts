@@ -1,5 +1,5 @@
 import { of, Observable, fromEvent, from, observable, fromEventPattern } from 'rxjs'; 
-import { map, timeout } from 'rxjs/operators';
+import { map, timeout, filter } from 'rxjs/operators';
 import { fromPromise } from 'rxjs/internal-compatibility';
 
 
@@ -10,7 +10,21 @@ import { fromPromise } from 'rxjs/internal-compatibility';
 // source.subscribe(x => console.log(x))
 
 
+const source = from([1, 2, 3, 4, 5,6,7,8,9,10,11,12,13,14,15]);
+const example = source.pipe(filter(num => num % 2 != 0));
+
 
 var button = document.querySelector('button');
+
+
 const clicks = fromEvent(button, 'click');
-clicks.subscribe(x => console.log(x));
+const result = from(fetch('https://jsonplaceholder.typicode.com/todos').then(res => res.json()));
+const resultPiped = result.pipe(
+  map((val) => {
+    return val.filter(num => num.completed);
+  })
+);
+
+clicks.subscribe(res1 => {
+  resultPiped.subscribe((val) => console.log(val))
+});
