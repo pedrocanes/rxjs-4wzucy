@@ -23,13 +23,12 @@ const result = from(fetch('https://jsonplaceholder.typicode.com/todos').then(res
 combinedEvents.pipe(debounceTime(1000)).subscribe((val) => val.map((event) => {
   if(event != 'none'){
     result.pipe(
-    map((comm) => {
-      return comm.filter(otherThing => otherThing.userId == event.target.id && event.target.checked);
-    })
-  ).subscribe((finalThing) => {
-    if(finalThing.length > 0) console.log(finalThing.map((comment) => comment.title))
-  }
-  )
+      map((comm) => {
+        return comm.filter(otherThing => otherThing.userId == event.target.id && event.target.checked);
+      })
+      ).subscribe((finalThing) => {
+        if(finalThing.length > 0) console.log(finalThing.map((comment) => comment.title))
+      })
   }
 }));
 
